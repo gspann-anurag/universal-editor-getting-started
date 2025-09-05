@@ -1,0 +1,4 @@
+# .stylelintignore
+# Ignore Tailwind compiled output and any other generated css
+styles/tailwind.build.css
+**/dist/**

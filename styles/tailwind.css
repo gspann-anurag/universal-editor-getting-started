@@ -1,0 +1,21 @@
+/* styles/tailwind.css */
+
+/* Core Tailwind v4 import */
+@import "tailwindcss";
+
+/* Explicit sources (so Tailwind scans AEM blocks) */
+@source "./blocks";
+
+/* Optional: theme tokens */
+@theme {
+  --color-primary: #0ea5e9;
+}
+
+/* Optional: custom components */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 rounded font-semibold;
+    background-color: var(--color-primary);
+    color: white;
+  }
+}

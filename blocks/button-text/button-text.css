@@ -1,0 +1,86 @@
+.button-wrapper {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.button-wrapper a:any-link {
+    text-decoration: none;
+}
+
+.button-container {
+    display: flex;
+    gap: 12px;
+}
+
+.button-label {
+    color: var(--Neutrals-500, #707070);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 330;
+    line-height: 26px; /* 150% */
+    letter-spacing: 0.08px;
+    margin-bottom: 15px;
+}
+
+.custom-button {
+    background-color: #0068FA;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    font-weight: 300;
+}
+
+a:any-link {
+    text-decoration: none;
+}
+
+.secondary-custom-button {
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+    display: flex;
+    font-weight: 350;
+    border: 1px solid #0068FA;;
+    border-radius: 5px;
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.secondary-custom-button:hover {
+    background-color: white;
+    text-decoration: none;
+}
+
+.custom-button span,
+.secondary-custom-button span {
+    padding-left: 15px;
+}
+
+
+.custom-button span {
+    padding-left: 15px;
+}
+
+
+.secondary-custom-button span .icon img{
+    color: black;
+}
+
+
+
+.custom-button:hover .arrow {
+    transform: translateX(5px);
+}
+
+.custom-button span {
+    padding-left: 15px;
+}
+

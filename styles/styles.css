@@ -172,7 +172,7 @@ a:hover {
 
 /* buttons */
 a.button:any-link,
-button {
+/* button {
   box-sizing: border-box;
   display: inline-block;
   max-width: 100%;
@@ -192,7 +192,7 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
+} */
 
 a.button:hover,
 a.button:focus,

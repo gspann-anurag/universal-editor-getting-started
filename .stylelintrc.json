@@ -19,14 +19,21 @@
         ]
       }
     ],
+
+    /* Allow @apply (Tailwind) and stop flagging it as deprecated */
+    "at-rule-no-deprecated": null,
+
+    /* Tailwind outputs and authored input may use vendor prefixed props / mixed case font names */
     "property-no-vendor-prefix": null,
     "value-keyword-case": null,
     "length-zero-no-unit": null,
     "declaration-empty-line-before": null,
+
+    /* Be tolerant about empty-lines before rules — avoids false positives for generated/nested blocks */
     "rule-empty-line-before": [
       "always",
       {
-        "ignore": ["after-comment", "first-nested"],
+        "ignore": ["after-comment", "first-nested", "inside-block"],
         "except": ["first-nested"]
       }
     ],
@@ -34,12 +41,12 @@
       "always",
       {
         "ignore": ["after-comment", "first-nested"],
-        "except": [
-          "blockless-after-same-name-blockless",
-          "inside-block"
-        ]
+        "except": ["blockless-after-same-name-blockless", "inside-block"]
       }
-    ]
+    ],
+
+    /* Allow string style @import "tailwindcss"; (Tailwind v4 CSS-first usage) */
+    "import-notation": "string"
   },
   "ignoreFiles": [
     "styles/tailwind.build.css",

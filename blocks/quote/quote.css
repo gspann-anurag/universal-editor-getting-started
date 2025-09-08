@@ -11,13 +11,15 @@
   .block.quote {
     /* keep exact background color as original screenshot */
     background-color: #ccc;
+
     /* padding-bottom: 24px */
     @apply pb-6;
+
     /* keep horizontal padding to 0 (original had 0 0 24px) */
     padding-left: 0;
     padding-right: 0;
-
     @apply flex flex-col;
+
     /* original margin: 1rem 0 */
     margin: 1rem 0;
   }

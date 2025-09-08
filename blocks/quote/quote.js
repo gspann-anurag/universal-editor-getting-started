@@ -3,5 +3,6 @@ export default function decorate(block) {
 
   const blockquote = document.createElement('blockquote');
   blockquote.textContent = quoteWrapper.textContent.trim();
+  blockquote.classList.add('bg-blue-500', 'text-white', 'px-4', 'py-2');
   quoteWrapper.replaceChildren(blockquote);
 }

@@ -1,32 +1,49 @@
 /* blocks/quote/quote.css */
 
-.block.quote {
-  background-color: #ccc;
-  padding: 0 0 24px;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-}
+/* Tailwind v4 engine (CSS-first) */
+@import "tailwindcss";
 
-.block.quote blockquote {
-  margin: 16px;
-  text-indent: 0;
-}
+/* ensure Tailwind scans this folder for classes used in the block */
+@source "./";
 
-.block.quote > div:last-child > div {
-  margin: 0 16px;
-  font-size: small;
-  font-style: italic;
-  position: relative;
-}
+/* component layer: utility-based with a couple of custom rules (pseudo-element) */
+@layer components {
+  .block.quote {
+    /* keep exact background color as original screenshot */
+    background-color: #ccc;
+    /* padding-bottom: 24px */
+    @apply pb-6;
+    /* keep horizontal padding to 0 (original had 0 0 24px) */
+    padding-left: 0;
+    padding-right: 0;
 
-.block.quote > div:last-child > div::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: -8px;
-  height: 5px;
-  width: 30px;
-  background-color: darkgray;
+    @apply flex flex-col;
+    /* original margin: 1rem 0 */
+    margin: 1rem 0;
+  }
+
+  .block.quote blockquote {
+    /* original margin: 16px */
+    @apply m-4;
+    text-indent: 0;
+  }
+
+  /* the author container (the last child structure used in your block) */
+  .block.quote > div:last-child > div {
+    /* original: margin: 0 16px; font-size: small; font-style: italic; position: relative; */
+    @apply mx-4 text-sm italic;
+    position: relative;
+  }
+
+  /* small dark bar under author (keeps same size & placement as original) */
+  .block.quote > div:last-child > div::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -8px;      /* same as original */
+    height: 5px;       /* same as original */
+    width: 30px;       /* same as original */
+    background-color: darkgray; /* same as original */
+  }
 }

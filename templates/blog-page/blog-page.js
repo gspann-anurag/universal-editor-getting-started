@@ -1,5 +1,7 @@
 // templates/blog-page/blog-page.js
 export default function decorate(block) {
+  // eslint-disable-next-line no-console
+  console.log('Debugging.qqqqqq.');
   // Expecting author to add content in a table-like structure via UE:
   // Row 1: Image
   // Row 2: Title (link optional)

@@ -10,6 +10,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  toClassName
 } from './aem.js';
 
 /**

@@ -125,6 +125,21 @@ function sampleRUM(checkpoint, data) {
     // something went awry
   }
 }
+/**
+ * Sanitizes a string for use as class name.
+ * @param {string} name The unsanitized string
+ * @returns {string} The class name
+ */
+function toClassName(name) {
+  return typeof name === 'string'
+    ? name
+        .toLowerCase()
+        .replace(/[^0-9a-z]/gi, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+    : '';
+}
+
 
 /**
  * Setup block utils.

@@ -94,6 +94,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    decorateTemplates(main);
     decorateMain(main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
@@ -145,3 +146,35 @@ async function loadPage() {
 }
 
 loadPage();
+
+const TEMPLATE_LIST = {
+  'blog-page': 'blog-page',
+};
+
+async function decorateTemplates(main) {
+  try {
+    const template = toClassName(getMetadata('template'));
+    const templates = Object.keys(TEMPLATE_LIST);
+    if (templates.includes(template)) {
+      const templateObj = TEMPLATE_LIST[template];
+      const templateName = typeof templateObj === 'string' ? templateObj : templateObj.templateName;
+      const templateDeps = typeof templateObj === 'string' ? [] : templateObj.dependencies || [];
+      const templateCSSDeps = typeof templateObj === 'string' ? [] : templateObj.cssdependenies || [];
+      const decorator = await Promise.all([
+        import(`../templates/${templateName}/${templateName}.js`),
+        ...templateDeps.map((dep) => import(dep)),
+      ]).then(([mod]) => mod.default);
+
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`);
+      templateCSSDeps.map((cssdep) => loadCSS(cssdep));
+
+      if (decorator) {
+        await decorator(main);
+      }
+      document.body.classList.add(templateName);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}

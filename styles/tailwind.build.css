@@ -201,6 +201,9 @@
   .table {
     display: table;
   }
+  .min-h-\[300px\] {
+    min-height: 300px;
+  }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }

@@ -21,6 +21,7 @@ export default function decorate(block) {
   
     // Clear existing content
     block.innerHTML = '';
+    console.log("test blog-page");
   
     // Build new structure
     if (imageRow) {

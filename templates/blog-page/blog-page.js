@@ -11,4 +11,8 @@ export default async function buildAutoBlocks() {
   const titleBlock = buildBlock('title-card', { elems: [] });
   headerSection.append(titleBlock);
   main.insertBefore(headerSection, section);
+
+  // ✅ Add blog-card block after the section
+  const blogCardBlock = buildBlock('blog-card', { elems: [] });
+  main.append(blogCardBlock);
 }

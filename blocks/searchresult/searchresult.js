@@ -1,9 +1,6 @@
 const ATOMIC_CSS_URL = 'https://static.cloud.coveo.com/atomic/v2/themes/coveo.css';
 const ATOMIC_JS_URL = 'https://static.cloud.coveo.com/atomic/v2/atomic.esm.js';
 
-/**
- * Load Atomic CSS and JS only once, and run callback after JS is ready
- */
 function loadAtomicResources(callback) {
   // Load CSS
   if (!document.querySelector(`link[href="${ATOMIC_CSS_URL}"]`)) {
@@ -32,9 +29,6 @@ function loadAtomicResources(callback) {
   }
 }
 
-/**
- * Builds the Coveo Atomic Search UI
- */
 function buildAtomicSearchUI() {
   const searchInterface = document.createElement('atomic-search-interface');
   searchInterface.id = 'search-interface';
@@ -75,9 +69,7 @@ function buildAtomicSearchUI() {
   return searchInterface;
 }
 
-/**
- * Initializes the Atomic Search Interface with required credentials
- */
+
 async function initializeAtomicSearch() {
   try {
     await customElements.whenDefined('atomic-search-interface');
@@ -89,8 +81,8 @@ async function initializeAtomicSearch() {
     }
 
     await searchInterface.initialize({
-      accessToken: 'xxca9398dc-2af2-4d92-aaa6-62b8f55efc57', // ✅ Replace with actual Coveo access token
-      organizationId: 'danahernonproduction1892f3fhz', // ✅ Replace with your Coveo org ID
+      accessToken: 'xx564559b1-0045-48e1-953c-3addd1ee4457',
+      organizationId: 'searchuisamples',
       platformUrl: 'https://platform.cloud.coveo.com',
     });
 
@@ -100,9 +92,7 @@ async function initializeAtomicSearch() {
   }
 }
 
-/**
- * Main block decorator
- */
+
 export default async function decorate(block) {
   block.textContent = '';
 

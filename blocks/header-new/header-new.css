@@ -1,5 +1,21 @@
 /* stylelint-disable */
 
+.secondary {
+  background-color: transparent;
+  color: #0060a8 !important;
+  border: none !important;
+}
+
+.sub-header {
+  height: 60px;
+  .section {
+    .default-content-wrapper {
+      display: flex;
+      gap: 30px;
+    }
+  }
+}
+
 .visible {
   visibility: visible
 }

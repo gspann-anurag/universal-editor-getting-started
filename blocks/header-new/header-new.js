@@ -1,8 +1,10 @@
 // /* eslint-disable */
-import { decorateIcons } from '../../scripts/aem.js';
+import { decorateIcons, getMetadata } from '../../scripts/aem.js';
 import {
   div, a, span, nav, img, input, button, form,
 } from '../../scripts/dom-builder.js';
+import { applyClasses } from '../../scripts/scripts.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 // Header Component
 function createHeader() {
@@ -110,12 +112,21 @@ function createSubHeader() {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // load nav as fragment
+  const navMeta = getMetadata('nav');
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const fragment = await loadFragment(navPath);
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
 
   // create header + subheader
   const headerEl = createHeader();
   const subHeaderEl = createSubHeader();
+  applyClasses(subHeaderEl, 'sub-header');
+
+  while (fragment.firstElementChild) {
+    subHeaderEl.append(fragment.firstElementChild);
+  }
 
   // append to wrapper (header first)
   navWrapper.append(headerEl);

@@ -114,6 +114,10 @@
           {
             "name": "secondary",
             "value": "secondary"
+          },
+          {
+            "name": "tertiary",
+            "value": "tertiary"
           }
         ]
       }
@@ -212,6 +216,37 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "nav-container",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nav_title",
+        "value": "",
+        "label": "Title"
+      }
+    ]
+  },
+  {
+    "id": "nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "item_title",
+        "value": "",
+        "label": "Link Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "item_link",
+        "value": "",
+        "label": "Link URL"
       }
     ]
   },

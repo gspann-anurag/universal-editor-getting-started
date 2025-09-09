@@ -1,6 +1,7 @@
 {
   "mappings": [
     "/content/aem-eds-start/:/",
+    "/content/aem-eds-start/blog-page:/blog-page/",
     "/content/aem-eds-start/configuration:/.helix/config.json",
     "/content/aem-eds-start/metadata:/metadata.json"
   ],

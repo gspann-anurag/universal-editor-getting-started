@@ -70,40 +70,8 @@ function createSubHeader() {
         span({ class: 'icon icon-search' }),
       ),
     ),
-    // Right Section → Quick Links
-    div(
-      { class: 'flex items-center space-x-6 text-sm text-blue-700' },
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline',
-          style: 'color: #0060a8',
-        },
-        span('Quick Order'),
-        span({ class: 'icon icon-bolt' }),
-      ),
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline',
-          style: 'color: #0060a8',
-        },
-        span('Request Quote'),
-        span({ class: 'icon icon-chat' }),
-      ),
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline text-gray-700 pr-8',
-          style: 'color: #0060a8',
-        },
-        span('Cart'),
-        span({ class: 'icon icon-cart' }),
-      ),
-    ),
   );
 
-  decorateIcons(subHeader);
   return subHeader;
 }
 

@@ -1,7 +1,8 @@
-.mb-10 {
-  margin-bottom: 2.5rem
+.blog-page {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.mb-8 {
-  margin-bottom: 2rem
+.blog-page:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }

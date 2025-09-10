@@ -14,5 +14,7 @@ export default async function buildAutoBlocks() {
 
   // ✅ Add blog-card block after the section
   const blogCardBlock = buildBlock('blog-card', { elems: [] });
-  main.append(blogCardBlock);
+  const blogSection = div({ class: 'my-12' });
+  blogSection.append(blogCardBlock);
+  main.append(blogSection);
 }

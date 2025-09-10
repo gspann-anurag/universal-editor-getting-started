@@ -20,12 +20,6 @@
         "name": "keywords",
         "multi": true,
         "label": "Keywords"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "template",
-        "label": "Template"
       }
     ]
   },
@@ -144,6 +138,32 @@
             "value": "highlight"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "blog-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Description",
+        "valueType": "string"
       }
     ]
   },

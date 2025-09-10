@@ -113,6 +113,24 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
+  // Category
+  const category = document.querySelector('meta[name="category"]');
+  if (!category) {
+    const meta = document.createElement('meta');
+    meta.name = 'category';
+    meta.content = window.hlx?.sidekick?.metadata?.category || 'default';
+    head.appendChild(meta);
+  }
+
+  // Author
+  const author = document.querySelector('meta[name="author"]');
+  if (!author) {
+    const meta = document.createElement('meta');
+    meta.name = 'author';
+    meta.content = window.hlx?.sidekick?.metadata?.author || 'unknown';
+    head.appendChild(meta);
+  }
+
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');

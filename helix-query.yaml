@@ -14,3 +14,21 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+      title:
+        select: head > title
+        value: text(el)
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      author:
+        select: head > meta[name="author"]
+        value: attribute(el, "content")
+      publishDate:
+        select: head > meta[name="publishDate"], head > meta[name="publish-date"]
+        value: attribute(el, "content")
+      category:
+        select: head > meta[name="category"], head > meta[name="my:category"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[name="cq-tags"], head > meta[name="tags"]
+        value: split(attribute(el, "content"), ",")

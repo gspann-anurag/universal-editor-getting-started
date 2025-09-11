@@ -8,32 +8,40 @@ indices:
       - '/**.json'
     target: /query-index.json
     properties:
+      # use the request path (guaranteed) to make indexer emit object array
       path:
-        select: head > link[rel="canonical"]
-        value: attribute(el, "href")
-        fallback:
-          value: url
+        selectFirst: none
+        value: path
+
       lastModified:
-        select: none
+        selectFirst: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+
       robots:
-        select: head > meta[name="robots"]
+        selectFirst: head > meta[name="robots"]
         value: attribute(el, "content")
+
       title:
-        select: head > title
-        value: text(el)
+        selectFirst: head > title
+        value: textContent(el)
+
       description:
-        select: head > meta[name="description"]
+        selectFirst: head > meta[name="description"]
         value: attribute(el, "content")
+
       author:
-        select: head > meta[name="author"]
+        selectFirst: head > meta[name="author"]
         value: attribute(el, "content")
+
       publishDate:
-        select: head > meta[name="publishDate"], head > meta[name="publish-date"]
+        selectFirst: head > meta[name="publishDate"], head > meta[name="publish-date"]
         value: attribute(el, "content")
+
       category:
-        select: head > meta[name="category"], head > meta[name="my:category"]
+        selectFirst: head > meta[name="category"], head > meta[name="my:category"]
         value: attribute(el, "content")
+
+      # tags is multi-value: use 'values' (returns array)
       tags:
         select: head > meta[name="cq-tags"], head > meta[name="tags"]
-        value: split(attribute(el, "content"), ",")
+        values: split(attribute(el, "content"), ",")

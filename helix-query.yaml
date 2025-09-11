@@ -11,6 +11,8 @@ indices:
       path:
         select: head > link[rel="canonical"]
         value: attribute(el, "href")
+        fallback:
+          value: url
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")

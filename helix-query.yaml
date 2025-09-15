@@ -14,10 +14,11 @@ indices:
 
       title:
         selectFirst: head > meta[name="title"], head > title, h1
-        value: attribute(el, "content")
+        # prefer meta content, fallback to element text
+        value: coalesce(attribute(el, "content"), text(el))
 
       description:
-        selectFirst: head > meta[name="description"]
+        selectFirst: head > meta[name="description"], meta[name="og:description"]
         value: attribute(el, "content")
 
       author:
@@ -25,13 +26,14 @@ indices:
         value: attribute(el, "content")
 
       publishDate:
-        selectFirst: head > meta[name="publishDate"], head > meta[name="publish-date"]
+        selectFirst: head > meta[name="publishDate"], head > meta[name="publish-date"], head > meta[property="article:published_time"]
         value: attribute(el, "content")
 
       category:
-        selectFirst: head > meta[name="category"], head > meta[name="my:category"]
-        value: attribute(el, "content")
+        selectFirst: head > meta[name="category"], head > meta[name="my:category"], .article-category
+        value: coalesce(attribute(el, "content"), text(el))
 
       tags:
         select: head > meta[name="cq-tags"], head > meta[name="tags"]
+        # split a comma list into an array
         values: split(attribute(el, "content"), ",")

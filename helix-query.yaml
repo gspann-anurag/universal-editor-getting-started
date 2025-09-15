@@ -1,24 +1,23 @@
 version: 1
 
-indices:
-  articles:
-    include:
+queries:
+  - name: articles
+    selector:
       - '/**'
     exclude:
       - '/**.json'
-    target: /query-index.json
+    output: /query-index.json
     properties:
       path:
         selectFirst: none
         value: path
 
       title:
-        selectFirst: head > meta[name="title"], head > title, h1
-        # prefer meta content, fallback to element text
+        selectFirst: head > meta[name="title"], head > meta[property="og:title"], head > title, h1
         value: coalesce(attribute(el, "content"), text(el))
 
       description:
-        selectFirst: head > meta[name="description"], meta[name="og:description"]
+        selectFirst: head > meta[name="description"], head > meta[property="og:description"]
         value: attribute(el, "content")
 
       author:
@@ -35,5 +34,4 @@ indices:
 
       tags:
         select: head > meta[name="cq-tags"], head > meta[name="tags"]
-        # split a comma list into an array
         values: split(attribute(el, "content"), ",")

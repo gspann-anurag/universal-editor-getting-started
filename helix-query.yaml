@@ -8,22 +8,14 @@ indices:
       - '/**.json'
     target: /query-index.json
     properties:
-      # use the request path (guaranteed) to make indexer emit object array
+      # page path (special builtin value)
       path:
         selectFirst: none
         value: path
 
-      lastModified:
-        selectFirst: none
-        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
-
-      robots:
-        selectFirst: head > meta[name="robots"]
-        value: attribute(el, "content")
-
       title:
-        selectFirst: head > title
-        value: textContent(el)
+        selectFirst: head > meta[name="title"], head > title, h1
+        value: attribute(el, "content")
 
       description:
         selectFirst: head > meta[name="description"]
@@ -41,7 +33,7 @@ indices:
         selectFirst: head > meta[name="category"], head > meta[name="my:category"]
         value: attribute(el, "content")
 
-      # tags is multi-value: use 'values' (returns array)
+      # tags is multi-value: use 'select' + 'values' to return an array
       tags:
         select: head > meta[name="cq-tags"], head > meta[name="tags"]
         values: split(attribute(el, "content"), ",")

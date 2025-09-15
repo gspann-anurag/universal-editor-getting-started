@@ -1,14 +1,13 @@
 version: 1
 
 indices:
-  pages:
+  articles:
     include:
       - '/**'
     exclude:
       - '/**.json'
     target: /query-index.json
     properties:
-      # page path (special builtin value)
       path:
         selectFirst: none
         value: path
@@ -33,7 +32,6 @@ indices:
         selectFirst: head > meta[name="category"], head > meta[name="my:category"]
         value: attribute(el, "content")
 
-      # tags is multi-value: use 'select' + 'values' to return an array
       tags:
         select: head > meta[name="cq-tags"], head > meta[name="tags"]
         values: split(attribute(el, "content"), ",")

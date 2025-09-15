@@ -1,14 +1,14 @@
-// /* eslint-disable */
+// header.js
 import { decorateIcons } from '../../scripts/aem.js';
 import {
-  div, a, span, nav, img, input, button, form,
+  div, a, span, nav, img, input, button, form, ul, li, h3,
 } from '../../scripts/dom-builder.js';
 
 // Header Component
 function createHeader() {
   const header = nav(
     {
-      class: 'fixed top-0 left-0 right-0 w-[100vw] max-w-screen overflow-x-hidden bg-blue-700 flex items-center justify-between px-4 md:px-6 py-2 box-border z-50',
+      class: 'logo-header w-full p-4 text-center',
       style: 'background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 15%, rgba(0, 96, 168, 1) 100%);',
     },
     // Left Section → Logo
@@ -48,7 +48,7 @@ function createHeader() {
 function createSubHeader() {
   const subHeader = nav(
     {
-      class: 'fixed left-0 right-0 w-[100vw] max-w-screen bg-white flex items-center justify-between px-6 py-3 border-b border-gray-200 box-border z-40',
+      class: 'search-header p-4 text-center',
     },
     // Left Section → Search Bar
     form(
@@ -68,37 +68,6 @@ function createSubHeader() {
         span({ class: 'icon icon-search' }),
       ),
     ),
-    // Right Section → Quick Links
-    div(
-      { class: 'flex items-center space-x-6 text-sm text-blue-700' },
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline',
-          style: 'color: #0060a8',
-        },
-        span('Quick Order'),
-        span({ class: 'icon icon-bolt' }),
-      ),
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline',
-          style: 'color: #0060a8',
-        },
-        span('Request Quote'),
-        span({ class: 'icon icon-chat' }),
-      ),
-      a(
-        {
-          href: '#',
-          class: 'flex items-center space-x-1 hover:underline text-gray-700 pr-8',
-          style: 'color: #0060a8',
-        },
-        span('Cart'),
-        span({ class: 'icon icon-cart' }),
-      ),
-    ),
   );
 
   decorateIcons(subHeader);
@@ -106,44 +75,202 @@ function createSubHeader() {
 }
 
 /**
- * loads and decorates the header(s)
- * @param {Element} block The header block element
+ * Extracts navigation data from a container block
+ * @param {Element} container The container element
+ * @returns {Object} Navigation data with title and items
  */
-export default async function decorate(block) {
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
+function extractNavData(container) {
+  const data = { title: '', items: [] };
+  // Parse AEM Author specific nested div structure
+  if (data.items.length === 0) {
+    const allDivs = container.querySelectorAll('div');
+    if (!data.title) {
+      let foundTitle = false;
+      allDivs.forEach((innerDiv) => {
+        const divText = innerDiv.textContent.trim();
+        const hasChildDivs = innerDiv.querySelector('div') !== null;
+        const hasChildPs = innerDiv.querySelector('p') !== null;
+        if (divText && !hasChildDivs && !hasChildPs && !foundTitle && divText.length < 50) {
+          data.title = divText;
+          foundTitle = true;
+        }
+      });
+    }
+    // Now look for paragraphs anywhere in the container (including nested)
+    const allParagraphs = container.querySelectorAll('p');
+    if (allParagraphs.length > 0) {
+      for (let i = 0; i < allParagraphs.length; i += 2) {
+        const titleP = allParagraphs[i];
+        const linkP = allParagraphs[i + 1];
+        if (titleP && linkP) {
+          const title = titleP.textContent.trim();
+          const url = linkP.textContent.trim();
+          if (title && url) {
+            data.items.push({ title, url });
+          }
+        }
+      }
+    }
+  }
+  return data;
+}
 
-  // create header + subheader
-  const headerEl = createHeader();
-  const subHeaderEl = createSubHeader();
+/**
+ * Builds a navigation category from a nav-container block
+ * @param {Element} container The nav-container block
+ * @returns {Element} Navigation category element
+ */
+function buildNavCategory(container) {
+  const categoryData = extractNavData(container);
+  if (!categoryData.title && categoryData.items.length === 0) {
+    return null;
+  }
+  const categoryWrapper = div({ class: 'nav-category relative' });
 
-  // append to wrapper (header first)
-  navWrapper.append(headerEl);
-  navWrapper.append(subHeaderEl);
+  // Add category title
+  if (categoryData.title) {
+    const categoryTitle = h3({
+      class: 'nav-category-title text-lg font-semibold cursor-pointer hover:text-blue-600 p-2',
+    }, categoryData.title);
+    categoryWrapper.appendChild(categoryTitle);
+  }
 
-  // attach wrapper to block (so elements are in DOM for measurement)
-  block.append(navWrapper);
+  // Add navigation items
+  if (categoryData.items.length > 0) {
+    const itemsList = ul({
+      class: 'nav-items hidden absolute top-full left-0 bg-white shadow-lg rounded-md min-w-48 z-10',
+    });
 
-  requestAnimationFrame(() => {
-    try {
-      const headerRect = headerEl.getBoundingClientRect();
-      const subHeaderRect = subHeaderEl.getBoundingClientRect();
+    categoryData.items.forEach((item) => {
+      const listItem = li({ class: 'nav-item' });
+      const link = a({
+        href: item.url || '#',
+        class: 'nav-link block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 border-gray-100',
+      }, item.title);
 
-      // set top of subheader to header height
-      subHeaderEl.style.top = `${Math.ceil(headerRect.height)}px`;
+      // Handle external links
+      if (item.url && (item.url.startsWith('http') || item.url.startsWith('mailto'))) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      }
 
-      // set body's padding-top to combined heights so page content is visible below fixed bars
-      const total = Math.ceil(headerRect.height + subHeaderRect.height);
-      document.body.style.paddingTop = `${total}px`;
+      listItem.appendChild(link);
+      itemsList.appendChild(listItem);
+    });
 
-      // defensive: ensure no horizontal scroll from these fixed bars
-      document.documentElement.style.boxSizing = 'border-box';
-      document.body.style.overflowX = 'hidden';
-    } catch (e) {
-      // ignore measurement errors in constrained environments
-      // (but the elements are still present)
+    categoryWrapper.appendChild(itemsList);
+
+    // Add hover functionality
+    categoryWrapper.addEventListener('mouseenter', () => {
+      itemsList.classList.remove('hidden');
+    });
+
+    categoryWrapper.addEventListener('mouseleave', () => {
+      itemsList.classList.add('hidden');
+    });
+  }
+
+  return categoryWrapper;
+}
+
+/**
+ * Fallback method to build navigation from any content
+ * @param {Element} headerBlock The header block
+ * @returns {Element} Navigation element
+ */
+function buildNavigationFromContent(headerBlock) {
+  const possibleNavBlocks = headerBlock.querySelectorAll('div, section');
+  const headerNav = nav({ class: 'header-navigation flex gap-8' });
+
+  possibleNavBlocks.forEach((block) => {
+    const textContent = block.textContent.trim();
+    if (textContent && textContent.length > 5) {
+      const categoryData = extractNavData(block);
+      if (categoryData.title || categoryData.items.length > 0) {
+        const navCategory = buildNavCategory(block);
+        if (navCategory) {
+          headerNav.appendChild(navCategory);
+        }
+      }
     }
   });
 
-  return navWrapper;
+  return headerNav;
+}
+
+/**
+ * Processes navigation container blocks and builds navigation structure
+ * @param {Element} headerBlock The header block containing navigation data
+ * @returns {Element} Structured navigation element
+ */
+function buildNavigationFromBlocks(headerBlock) {
+  const navContainers = headerBlock.querySelectorAll('.nav-container');
+
+  if (navContainers.length === 0) {
+    // Fallback
+    return buildNavigationFromContent(headerBlock);
+  }
+  const headerNav = nav({ class: 'header-navigation flex gap-8' });
+  navContainers.forEach((container) => {
+    const navCategory = buildNavCategory(container);
+    if (navCategory) {
+      headerNav.appendChild(navCategory);
+    }
+  });
+  return headerNav;
+}
+
+function buildButtonBlock(headerBlock) {
+  const buttonHTMLBlock = headerBlock?.children[0];
+  // const buttonHTMLBlock2 = buttonHTMLBlock?.children[0];
+  if (buttonHTMLBlock) buttonHTMLBlock.className = 'build-button-block';
+}
+
+/**
+ * Main header decoration function
+ * @param {Element} block The header block element
+ */
+export default async function decorate(block) {
+  try {
+    // Fetch the header fragment (similar to the reference code)
+    const resp = await fetch('/nav.plain.html');
+    const html = await resp.text();
+
+    // Create header container
+    const headerBlock = div({
+      class: 'header-container bg-white shadow-sm relative z-20',
+    });
+    headerBlock.innerHTML = html;
+    buildButtonBlock(headerBlock);
+    const headerButtonSection = headerBlock?.querySelector('.build-button-block');
+
+    // create header + subheader
+    const headerEl = createHeader();
+    const subHeaderEl = createSubHeader();
+
+    // Build navigation from the fetched content
+    const navigation = buildNavigationFromBlocks(headerBlock);
+
+    const navWrapper = document.createElement('div');
+    navWrapper.className = 'nav-wrapper fixed top-0 left-0 w-full bg-gray-800 text-white flex flex-col z-50';
+
+    // append to wrapper (header first)
+    navWrapper.append(headerEl);
+    subHeaderEl.append(headerButtonSection);
+    navWrapper.append(subHeaderEl);
+    navWrapper.append(navigation);
+    block.append(navWrapper);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error building header:', error);
+
+    // Fallback: try to build navigation from the block content directly
+    const fallbackNav = buildNavigationFromContent(block);
+    if (fallbackNav.children.length > 0) {
+      block.innerHTML = '';
+      block.appendChild(fallbackNav);
+    }
+  }
+
+  return block;
 }

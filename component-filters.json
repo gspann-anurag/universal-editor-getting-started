@@ -18,7 +18,7 @@
       "fragment",
       "quote",
       "nav-container",
-      "article"
+      "articles"
     ]
   },
   {
@@ -46,6 +46,12 @@
     "id": "nav-container",
     "components": [
       "nav-item"
+    ]
+  },
+  {
+    "id": "articles",
+    "components": [
+      "article"
     ]
   }
 ]

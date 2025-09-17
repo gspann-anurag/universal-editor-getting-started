@@ -308,5 +308,38 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "articles",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "value": "Articles",
+        "label": "Section name",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "columns",
+        "value": "3",
+        "label": "Columns",
+        "valueType": "number",
+        "options": [
+          {
+            "name": "1 column",
+            "value": "1"
+          },
+          {
+            "name": "2 columns",
+            "value": "2"
+          },
+          {
+            "name": "3 columns",
+            "value": "3"
+          }
+        ]
+      }
+    ]
   }
 ]

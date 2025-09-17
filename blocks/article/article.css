@@ -1,0 +1,74 @@
+/* blocks/article/article.css */
+
+/* Base container — keep your previous styles and class names */
+.block.article,
+.ue-article-block {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-left: 4px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Title */
+.ue-article-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: #111827;
+}
+
+/* Meta line (author + date) */
+.ue-article-meta {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  color: #555;
+  font-style: italic;
+}
+
+/* Body: hidden by default, shown when .expanded present */
+.ue-article-body {
+  display: none;
+  margin-top: 0.75rem;
+  color: #111;
+  font-size: 1rem;
+}
+
+.ue-article-body.expanded {
+  display: block;
+}
+
+/* Toggle button (styled like link) */
+.ue-article-toggle {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: none;
+  border: none;
+  color: #0b5fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: 3px;
+}
+
+/* Hover / focus states */
+.ue-article-toggle:hover,
+.ue-article-toggle:focus {
+  text-decoration: none;
+  outline: none;
+  background-color: rgba(11,95,255,0.06);
+}
+
+/* Make sure rich text paragraphs inside body have sensible spacing */
+.ue-article-body p {
+  margin: 0 0 0.75rem 0;
+}
+
+/* Small screens: slightly smaller title */
+@media (max-width: 480px) {
+  .ue-article-title { font-size: 1.25rem; }
+}

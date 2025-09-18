@@ -2,10 +2,10 @@
 // decorate() for single Article card — title + meta, body hidden with a ...more toggle.
 
 // Helper: build the "By Author on DATE" meta string.
-// Declared before usage so lint/no-use-before-define won't complain.
+// Avoids parameter reassignment (to satisfy no-param-reassign).
 function buildMeta(author, date) {
-  author = (author && String(author).trim()) || '';
-  date = (date && String(date).trim()) || '';
+  const author = (author && String(author).trim()) || '';
+  const date = (date && String(date).trim()) || '';
   if (author && date) return `By ${author} on ${date}`;
   if (author) return `By ${author}`;
   if (date) return `Published on ${date}`;

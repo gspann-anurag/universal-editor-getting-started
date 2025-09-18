@@ -14,3 +14,47 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+
+  articles:
+    include:
+      - '/**'
+    exclude:
+      - '/**.json'
+    target: /articles-index.json
+    properties:
+      id:
+        select: none
+        value: $.id
+      parent_page:
+        select: none
+        value: $.parentPage
+      path:
+        select: none
+        value: $.path
+      title:
+        select: none
+        value: $.title
+      author:
+        select: none
+        value: $.author
+      publish_date:
+        select: none
+        value: $.publishDate
+      eyebrow:
+        select: none
+        value: $.eyebrow
+      lede:
+        select: none
+        value: $.lede
+      body_text:
+        select: none
+        value: $.bodyText
+      body_html:
+        select: none
+        value: $.bodyHtml
+      type:
+        select: none
+        value: $.type
+      lastModified:
+        select: none
+        value: $.lastModified

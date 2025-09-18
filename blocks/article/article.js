@@ -1,14 +1,13 @@
 // blocks/article/article.js
 // decorate() for single Article card — title + meta, body hidden with a ...more toggle.
 
-// Helper: build the "By Author on DATE" meta string.
-// Avoids parameter reassignment (to satisfy no-param-reassign).
-function buildMeta(author, date) {
-  const author = (author && String(author).trim()) || '';
-  const date = (date && String(date).trim()) || '';
-  if (author && date) return `By ${author} on ${date}`;
-  if (author) return `By ${author}`;
-  if (date) return `Published on ${date}`;
+// buildMeta: do not reassign or redeclare parameters (lint-friendly names)
+function buildMeta(rawAuthor, rawDate) {
+  const authorStr = (rawAuthor && String(rawAuthor).trim()) || '';
+  const dateStr = (rawDate && String(rawDate).trim()) || '';
+  if (authorStr && dateStr) return `By ${authorStr} on ${dateStr}`;
+  if (authorStr) return `By ${authorStr}`;
+  if (dateStr) return `Published on ${dateStr}`;
   return '';
 }
 

@@ -275,5 +275,38 @@
         "value": ""
       }
     ]
+  },
+  {
+    "id": "article",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "value": "",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "author",
+        "value": "",
+        "label": "Author",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "publishDate",
+        "value": "",
+        "label": "Publish Date",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "value": "",
+        "label": "Body",
+        "valueType": "string"
+      }
+    ]
   }
 ]
